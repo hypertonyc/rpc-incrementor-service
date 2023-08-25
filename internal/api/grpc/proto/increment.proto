@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package proto;
+option go_package = "./pb";
+
+// Message for number settings
+message Settings {
+  int32 increment_step = 1;
+  int32 upper_limit = 2;
+}
+
+// Service definition for the number service
+service IncrementService {
+  // Get the current number value
+  rpc GetNumber(GetNumberRequest) returns (GetNumberResponse);
+
+  // Increment the number value
+  rpc IncrementNumber(IncrementNumberRequest) returns (IncrementNumberResponse);
+
+  // Set the settings for the increment service
+  rpc SetSettings(SetSettingsRequest) returns (SetSettingsResponse);
+}
+
+// Request and response messages for GetNumber
+message GetNumberRequest {}
+message GetNumberResponse {
+  int32 current_number = 1;
+}
+
+// Request and response messages for IncrementNumber
+message IncrementNumberRequest {}
+message IncrementNumberResponse {}
+
+// Request and response messages for SetSettings
+message SetSettingsRequest {
+  Settings settings = 1;
+}
+message SetSettingsResponse {}

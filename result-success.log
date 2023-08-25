@@ -1,0 +1,9 @@
+Current number value is: 0
+Current number value is: 2
+Current number value is: 9
+Current number value is: 16
+rpc error: code = Unknown desc = increment step must be less than upper limit
+rpc error: code = Unknown desc = upper limit must be greater than zero
+rpc error: code = Unknown desc = increment step must be greater than zero
+Current number value is: 16
+Current number value is: 3

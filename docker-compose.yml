@@ -1,0 +1,39 @@
+version: '3.5'
+
+services:
+  grpc-server:
+    build: .
+    image: incrementor
+    container_name: ${GRPC_CONTAINER_NAME}
+    restart: always
+    ports:
+      - ${GRPC_PORT}:9000
+    networks:
+      - incrementor_net
+    environment:
+      GRPC_PORT: 9000
+      PG_CONNECTION_URL: ${GRPC_DB_CONNECTION}
+      LOG_LEVEL: info
+    depends_on:
+      - postgresql
+
+  postgresql:
+    image: postgres:15.4
+    container_name: ${POSTGRES_CONTAINER_NAME}
+    restart: always
+    user: ${CURRENT_UID}:${CURRENT_GID}
+    ports:
+      - 5432:5432
+    networks:
+      - incrementor_net
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ${POSTGRES_DATA_PATH}:/var/lib/postgresql/data
+      - /etc/passwd:/etc/passwd:ro
+
+networks:
+  incrementor_net:
+    name: incrementor_network
